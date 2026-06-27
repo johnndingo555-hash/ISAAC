@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# WhatsApp authentication credentials — NEVER commit these, they grant
+# full access to the linked WhatsApp account.
+auth_info_baileys/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment variables
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
