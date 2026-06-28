@@ -45,10 +45,12 @@ module.exports = {
 
         // Your 13 commands
         const categories = {
-            'GROUP': ['demote', 'groupinfo', 'kick', 'mute', 'promote', 'tagall', 'warn'],
-            'SETTINGS': ['anticall', 'autoread', 'autorecording', 'autotyping', 'mode'],
-            'MISC': ['calc', 'help', 'joke', 'menu', 'ping', 'quote']
-        };
+    'GROUP': ['demote', 'groupinfo', 'kick', 'mute', 'promote', 'tagall', 'warn'],
+    'SETTINGS': ['anticall', 'autoread', 'autorecording', 'autotyping', 'mode'],
+    'DOWNLOAD': ['download'], 
+    'GAMES': ['user', 'trivia', 'hi', 'game trivia'],     
+    'MISC': ['calc', 'help', 'joke', 'menu', 'ping', 'quote']
+};
 
         for (const [categoryName, commandList] of Object.entries(categories)) {
             menuMessage += ` ╭─❏ ${categoryName} ❏\n`;
