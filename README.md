@@ -1,6 +1,6 @@
 ISAAC BOT
 
-<img width="1280" height="960" alt="WhatsApp Image 2026-06-26 at 21 55 17" src="https://github.com/user-attachments/assets/59a4887b-8d20-425f-be8e-f3a419766eb6" />
+<img width="720" height="631" alt="WhatsApp Image 2026-06-25 at 15 55 48" src="https://github.com/user-attachments/assets/29486bcb-8839-42df-8d87-01e60a780f0f" />
 
 
 
