@@ -25,6 +25,8 @@ module.exports = {
   // Logging level passed to the pino logger used internally by Baileys.
   // Options: 'fatal' | 'error' | 'warn' | 'info' | 'debug' | 'trace' | 'silent'
   logLevel: 'silent',
+    AUTO_TYPING: false,
+    AUTO_RECORDING: false,
 
   // Whether the bot should print incoming messages to the console.
   // Useful for debugging; turn off in production if you want less noise.
