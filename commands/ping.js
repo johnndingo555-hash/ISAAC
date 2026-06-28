@@ -23,6 +23,6 @@ module.exports = {
    */
   async execute(sock, msg, args) {
     const jid = msg.key.remoteJid; // the chat ID to reply to (user or group)
-    await sock.sendMessage(jid, { text: 'Pong! 🏓' }, { quoted: msg });
+    await sock.sendMessage(jid, { text: 'Pong! 😡' }, { quoted: msg });
   },
 };
