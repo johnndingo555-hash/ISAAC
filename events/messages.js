@@ -52,6 +52,12 @@ function registerMessageHandler(sock, commands) {
       try {
         // 1. Skip completely if there's no actual message body structure
         if (!msg.message) continue;
+        if (config.AUTO_TYPING) {
+            await sock.sendPresenceUpdate('composing', msg.key.remoteJid);
+        }
+        if (config.AUTO_RECORDING) {
+            await sock.sendPresenceUpdate('recording', msg.key.remoteJid);
+        }
 
         const text = extractMessageText(msg.message).trim();
         if (!text) continue;
