@@ -18,10 +18,9 @@ module.exports = {
       const ramUsed = (process.memoryUsage().rss / 1024 / 1024).toFixed(2);
 
       // CPU information (safe for Android)
-      const cpus = os.cpus() || [];
-      const cpuModel = cpus.length ? cpus[0].model : 'Unknown';
-      const cpuCores = cpus.length || 'Unknown';
-
+      const cpuModel = 'ARM Cortex-A75 + Cortex-A55';
+const cpuCores = 8;
+const architecture = os.arch();
       // RAM
       const totalRam = (os.totalmem() / 1024 / 1024 / 1024).toFixed(2);
       const freeRam = (os.freemem() / 1024 / 1024 / 1024).toFixed(2);
@@ -43,6 +42,7 @@ module.exports = {
 
 🖥 *CPU:* ${cpuModel}
 ⚙️ *Cores:* ${cpuCores}
+🏗 *Architecture:* ${architecture}
 
 🌐 *System:* ${platform}
 🟩 *Node.js:* ${nodeVersion}
