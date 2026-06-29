@@ -1,45 +1,36 @@
-/**
- * commands/stats.js
- * ----------------
- * Shows detailed bot statistics.
- *
- * Usage: !stats
- */
-
 const os = require('os');
 
 module.exports = {
   name: 'stats',
-
   description: 'Displays detailed bot statistics.',
 
   async execute(sock, msg, args) {
-    const jid = msg.key.remoteJid;
+    try {
+      const jid = msg.key.remoteJid;
 
-    // Uptime
-    const uptime = process.uptime();
-    const hours = Math.floor(uptime / 3600);
-    const minutes = Math.floor((uptime % 3600) / 60);
-    const seconds = Math.floor(uptime % 60);
+      // Uptime
+      const uptime = process.uptime();
+      const hours = Math.floor(uptime / 3600);
+      const minutes = Math.floor((uptime % 3600) / 60);
+      const seconds = Math.floor(uptime % 60);
 
-    // Memory usage
-    const memory = process.memoryUsage();
-    const ramUsed = (memory.rss / 1024 / 1024).toFixed(2);
+      // Memory usage
+      const ramUsed = (process.memoryUsage().rss / 1024 / 1024).toFixed(2);
 
-    // System information
-    const cpuModel = os.cpus()[0].model;
-    const cpuCores = os.cpus().length;
-    const totalRam = (os.totalmem() / 1024 / 1024 / 1024).toFixed(2);
-    const freeRam = (os.freemem() / 1024 / 1024 / 1024).toFixed(2);
+      // CPU information (safe for Android)
+      const cpus = os.cpus() || [];
+      const cpuModel = cpus.length ? cpus[0].model : 'Unknown';
+      const cpuCores = cpus.length || 'Unknown';
 
-    // Platform info
-    const platform = `${os.type()} ${os.release()}`;
-    const nodeVersion = process.version;
+      // RAM
+      const totalRam = (os.totalmem() / 1024 / 1024 / 1024).toFixed(2);
+      const freeRam = (os.freemem() / 1024 / 1024 / 1024).toFixed(2);
 
-    // Current time
-    const now = new Date().toLocaleString();
+      // System info
+      const platform = `${os.type()} ${os.release()}`;
+      const nodeVersion = process.version;
 
-    const text = `
+      const text = `
 📊 *BOT STATISTICS*
 
 🤖 *Bot:* ISAAC
@@ -56,13 +47,19 @@ module.exports = {
 🌐 *System:* ${platform}
 🟩 *Node.js:* ${nodeVersion}
 
-📅 *Time:* ${now}
+📅 *Time:* ${new Date().toLocaleString()}
 `.trim();
 
-    await sock.sendMessage(
-      jid,
-      { text },
-      { quoted: msg }
-    );
+      await sock.sendMessage(jid, { text }, { quoted: msg });
+
+    } catch (err) {
+      console.error('Stats command error:', err);
+
+      await sock.sendMessage(
+        msg.key.remoteJid,
+        { text: `❌ Error: ${err.message}` },
+        { quoted: msg }
+      );
+    }
   },
 };
