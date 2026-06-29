@@ -48,7 +48,8 @@ module.exports = {
     'GROUP': ['demote', 'groupinfo', 'kick', 'mute', 'promote', 'tagall', 'warn'],
     'SETTINGS': ['anticall', 'autoread', 'autorecording', 'autotyping', 'mode'],
     'DOWNLOAD': ['download', 'spotify', 'play'], 
-    'GAMES': ['game'],     
+    'GAMES': ['game'],
+    'WHATSAPP': ['poll', 'react', 'delete', 'read', 'setstatus', 'status', 'vv', 'online', 'caption', 'doc', 'antiedit', 'call', 'cinfo', 'clear', 'creact', 'scstatus'],     
     'MISC': ['calc', 'alive',  'help', 'joke', 'menu', 'ping', 'quote', 'user', 'stats']
 };
 

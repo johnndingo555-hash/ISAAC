@@ -86,12 +86,6 @@ module.exports = [
       const jid = msg.key.remoteJid;
       const quoted = msg.message?.extendedTextMessage?.contextInfo;
 
-    const viewOnce =
-        quoted.viewOnceMessage?.message ||
-        quoted.viewOnceMessageV2?.message ||
-        quoted.viewOnceMessageV2Extension?.message;
-
-
       if (!quoted) {
         return sock.sendMessage(jid, {
           text: '❌ Reply to the message you want to delete.'
@@ -116,12 +110,6 @@ module.exports = [
     async execute(sock, msg) {
       const jid = msg.key.remoteJid;
       const quoted = msg.message?.extendedTextMessage?.contextInfo;
-
-    const viewOnce =
-        quoted.viewOnceMessage?.message ||
-        quoted.viewOnceMessageV2?.message ||
-        quoted.viewOnceMessageV2Extension?.message;
-
 
       if (!quoted) {
         return sock.sendMessage(jid, {
@@ -177,58 +165,37 @@ module.exports = [
   },
 
   // ── VIEW ONCE (VV) ────────────────────────────────────────────────────────
-  const { downloadContentFromMessage } = require('@whiskeysockets/baileys');
+  {
+    name: 'vv',
+    description: 'View a view-once message. Reply to a view-once message with .vv',
+    async execute(sock, msg) {
+      const jid = msg.key.remoteJid;
+      const ctx = msg.message?.extendedTextMessage?.contextInfo;
+      const quoted = ctx?.quotedMessage;
 
-module.exports = {
-  name: 'vv',
-  description: 'View a view-once message. Reply to a view-once message with .vv',
-
-  async execute(sock, msg) {
-    const jid = msg.key.remoteJid;
-    const ctx = msg.message?.extendedTextMessage?.contextInfo;
-    const quoted = ctx?.quotedMessage;
-
-    if (!quoted) {
-      return sock.sendMessage(jid, { text: '❌ Reply to a view-once message with .vv' }, { quoted: msg });
-    }
-
-    const viewOnce =
-      quoted.viewOnceMessage?.message ||
-      quoted.viewOnceMessageV2?.message ||
-      quoted.viewOnceMessageV2Extension?.message ||
-      quoted.viewOnceMessageV3?.message;
-
-    if (!viewOnce) {
-      return sock.sendMessage(jid, { text: '❌ That is not a view-once message.' }, { quoted: msg });
-    }
-
-    try {
-      const type = Object.keys(viewOnce)[0];
-      const media = viewOnce[type];
-      const mediaType = type.replace('Message', '').toLowerCase();
-
-      // Download the media
-      const stream = await downloadContentFromMessage(media, mediaType);
-      let buffer = Buffer.from([]);
-      for await (const chunk of stream) {
-        buffer = Buffer.concat([buffer, chunk]);
+      if (!quoted) {
+        return sock.sendMessage(jid, {
+          text: '❌ Reply to a view-once message with .vv'
+        }, { quoted: msg });
       }
 
-      // Send the downloaded media back
-      await sock.sendMessage(jid, { 
-        [mediaType]: buffer,
-        caption: 'Captured View-Once message' 
-      }, { quoted: msg });
+      const viewOnce =
+        quoted.viewOnceMessage?.message ||
+        quoted.viewOnceMessageV2?.message ||
+        quoted.viewOnceMessageV2Extension?.message;
 
-    } catch (error) {
-      console.error('DEBUGGING ERROR:', error);
-      await sock.sendMessage(jid, { text: '❌ Debug Error: ' + error.message }, { quoted: msg });
+      if (!viewOnce) {
+        return sock.sendMessage(jid, {
+          text: '❌ That is not a view-once message.'
+        }, { quoted: msg });
+      }
+
+      const type = Object.keys(viewOnce)[0];
+      const content = viewOnce[type];
+
+      await sock.sendMessage(jid, { [type]: content }, { quoted: msg });
     }
-  }
-};
-
-  
-                             
+  },
 
   // ── ONLINE ────────────────────────────────────────────────────────────────
   {
@@ -249,12 +216,6 @@ module.exports = {
       const jid = msg.key.remoteJid;
       const ctx = msg.message?.extendedTextMessage?.contextInfo;
       const quoted = ctx?.quotedMessage;
-
-    const viewOnce =
-        quoted.viewOnceMessage?.message ||
-        quoted.viewOnceMessageV2?.message ||
-        quoted.viewOnceMessageV2Extension?.message;
-
 
       if (!quoted) {
         return sock.sendMessage(jid, {
@@ -289,12 +250,6 @@ module.exports = {
       const jid = msg.key.remoteJid;
       const ctx = msg.message?.extendedTextMessage?.contextInfo;
       const quoted = ctx?.quotedMessage;
-
-    const viewOnce =
-        quoted.viewOnceMessage?.message ||
-        quoted.viewOnceMessageV2?.message ||
-        quoted.viewOnceMessageV2Extension?.message;
-
 
       if (!quoted) {
         return sock.sendMessage(jid, {
