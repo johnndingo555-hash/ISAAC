@@ -47,7 +47,7 @@ module.exports = {
         const categories = {
     'GROUP': ['demote', 'groupinfo', 'kick', 'mute', 'promote', 'tagall', 'warn'],
     'SETTINGS': ['anticall', 'autoread', 'autorecording', 'autotyping', 'mode'],
-    'DOWNLOAD': ['download'], 
+    'DOWNLOAD': ['download', 'spotify', 'play'], 
     'GAMES': ['game'],     
     'MISC': ['calc', 'alive',  'help', 'joke', 'menu', 'ping', 'quote', 'user', 'stats']
 };
