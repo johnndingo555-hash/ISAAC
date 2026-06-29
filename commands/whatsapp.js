@@ -86,6 +86,12 @@ module.exports = [
       const jid = msg.key.remoteJid;
       const quoted = msg.message?.extendedTextMessage?.contextInfo;
 
+    const viewOnce =
+        quoted.viewOnceMessage?.message ||
+        quoted.viewOnceMessageV2?.message ||
+        quoted.viewOnceMessageV2Extension?.message;
+
+
       if (!quoted) {
         return sock.sendMessage(jid, {
           text: '❌ Reply to the message you want to delete.'
@@ -110,6 +116,12 @@ module.exports = [
     async execute(sock, msg) {
       const jid = msg.key.remoteJid;
       const quoted = msg.message?.extendedTextMessage?.contextInfo;
+
+    const viewOnce =
+        quoted.viewOnceMessage?.message ||
+        quoted.viewOnceMessageV2?.message ||
+        quoted.viewOnceMessageV2Extension?.message;
+
 
       if (!quoted) {
         return sock.sendMessage(jid, {
@@ -170,10 +182,26 @@ module.exports = [
   name: 'vv',
   description: 'View a view-once message. Reply to a view-once message with .vv',
 
-  async execute(sock, msg) {
-    const jid = msg.key.remoteJid;
-    const ctx = msg.message?.extendedTextMessage?.contextInfo;
-    const quoted = ctx?.quotedMessage;
+<<<<<<< HEAD
+const quoted = ctx?.quotedMessage;
+
+if (!quoted) {
+  return sock.sendMessage(jid, {
+    text: '❌ Reply to a view-once message with .vv'
+  }, { quoted: msg });
+}
+
+const viewOnce =
+  quoted.viewOnceMessage?.message ||
+  quoted.viewOnceMessageV2?.message ||
+  quoted.viewOnceMessageV2Extension?.message;
+
+if (!viewOnce) {
+  return sock.sendMessage(jid, {
+    text: '❌ That is not a view-once message.'
+  }, { quoted: msg });
+}
+>>>>>>> af07967 (Fix vv command)
 
     if (!quoted) {
       return sock.sendMessage(jid, {
@@ -219,6 +247,12 @@ module.exports = [
       const ctx = msg.message?.extendedTextMessage?.contextInfo;
       const quoted = ctx?.quotedMessage;
 
+    const viewOnce =
+        quoted.viewOnceMessage?.message ||
+        quoted.viewOnceMessageV2?.message ||
+        quoted.viewOnceMessageV2Extension?.message;
+
+
       if (!quoted) {
         return sock.sendMessage(jid, {
           text: '❌ Reply to an image or video with .caption <text>'
@@ -252,6 +286,12 @@ module.exports = [
       const jid = msg.key.remoteJid;
       const ctx = msg.message?.extendedTextMessage?.contextInfo;
       const quoted = ctx?.quotedMessage;
+
+    const viewOnce =
+        quoted.viewOnceMessage?.message ||
+        quoted.viewOnceMessageV2?.message ||
+        quoted.viewOnceMessageV2Extension?.message;
+
 
       if (!quoted) {
         return sock.sendMessage(jid, {
