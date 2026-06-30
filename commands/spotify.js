@@ -1,8 +1,9 @@
 /*
  * Spotify Downloader Command
- * Searches YouTube for the requested track and sends back the audio.
+ * Searches YouTube for the requested track and streams the audio
+ * directly via ytdl-core (no third-party proxy APIs).
  */
-const axios = require('axios');
+const ytdl = require('@distube/ytdl-core');
 const yts = require('yt-search');
 const config = require('../config/config');
 
@@ -38,30 +39,25 @@ module.exports = {
                 text: `⬇️ Found: *${video.title}*\n⏱️ ${video.timestamp}\n\nDownloading audio...`,
             }, { quoted: msg });
 
-            const apis = [
-                `https://apis.xcasper.space/api/downloader/ytmp3?url=${encodeURIComponent(videoUrl)}`,
-                `https://mcow.giftedtechnexus.workers.dev/api/yta?url=${encodeURIComponent(videoUrl)}`,
-            ];
+            // Download audio directly from YouTube into a buffer
+            const chunks = [];
+            await new Promise((resolve, reject) => {
+                const stream = ytdl(videoUrl, { filter: 'audioonly', quality: 'highestaudio' });
+                stream.on('data', (chunk) => chunks.push(chunk));
+                stream.on('end', resolve);
+                stream.on('error', reject);
+            });
 
-            let downloadUrl = null;
-            for (const url of apis) {
-                try {
-                    const res = await axios.get(url, { timeout: 15000 });
-                    downloadUrl = res.data?.result || res.data?.url || res.data?.result?.download_url || null;
-                    if (downloadUrl) break;
-                } catch (e) {
-                    continue;
-                }
-            }
+            const audioBuffer = Buffer.concat(chunks);
 
-            if (!downloadUrl) {
+            if (audioBuffer.length < 1000) {
                 return sock.sendMessage(jid, {
-                    text: '❌ All download APIs failed. The link might be restricted or the services are down.',
+                    text: '❌ Download failed — the audio stream was empty. Please try again later.',
                 }, { quoted: msg });
             }
 
             await sock.sendMessage(jid, {
-                audio: { url: downloadUrl },
+                audio: audioBuffer,
                 mimetype: 'audio/mpeg',
                 fileName,
             }, { quoted: msg });
