@@ -45,7 +45,7 @@ module.exports = {
 
         // Your 13 commands
         const categories = {
-    'GROUP': ['demote', 'groupinfo', 'kick', 'mute', 'promote', 'tagall', 'warn', 'add', 'invite', 'join', 'welcome', 'goodbye', 'unmute', 'amute', 'aunmute'],
+    'GROUP': ['demote', 'groupinfo', 'kick', 'mute', 'promote', 'tagall', 'warn', 'add', 'invite', 'join', 'welcome', 'goodbye', 'unmute', 'amute', 'aunmute', 'ban', 'unban'],
     'SETTINGS': ['anticall', 'autoread', 'autorecording', 'autotyping', 'mode'],
     'DOWNLOAD': ['download', 'spotify', 'play', 'tiktok', 'ig', 'fb', 'twitter'],
     'GAMES': ['game', 'tictactoe', 'move', 'ttend', 'rps', 'wordguess', 'guess', 'wgend', 'mathquiz', 'mans'],
@@ -55,7 +55,7 @@ module.exports = {
     'USER': ['block', 'unblock', 'pp', 'fullpp', 'jid', 'gjid', 'left'],
     'OWNER': ['owner', 'kill', 'backup', 'reminder', 'task', 'tog', 'update', 'updatenow'],
     'TOOLS': ['webscan'],
-    'MISC': ['calc', 'alive', 'help', 'joke', 'menu', 'ping', 'quote', 'user', 'stats']
+    'MISC': ['isaac', 'script', 'calc', 'alive', 'help', 'joke', 'menu', 'ping', 'quote', 'user', 'stats']
 };
 
         for (const [categoryName, commandList] of Object.entries(categories)) {
