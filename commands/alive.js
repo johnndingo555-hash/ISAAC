@@ -2,7 +2,7 @@
  * commands/alive.js
  * -----------------
  * Checks whether the bot is alive.
- * Sends owner's profile picture with status text, a vcard contact, and a 20s audio clip.
+ * Sends owner's profile picture with status text, and an audio clip.
  *
  * Usage: .alive
  */
@@ -45,8 +45,7 @@ module.exports = {
 
 ⏱ *Uptime:* ${hours}h ${minutes}m ${seconds}s
 📱 *Platform:* ${process.platform}
-👤 *Owner:* ${ownerName}
-📞 *Number:* +${ownerNumber}`.trim();
+👤 *Owner:* ${ownerName}`.trim();
 
     // 1. Send owner's profile picture with caption
     try {
@@ -58,24 +57,9 @@ module.exports = {
       await sock.sendMessage(jid, { text: caption }, { quoted: msg });
     }
 
-    // 2. Send vcard contact
-    const vcard =
-      'BEGIN:VCARD\n' +
-      'VERSION:3.0\n' +
-      `FN:${ownerName}\n` +
-      `ORG:ISAAC BOT;\n` +
-      `TEL;type=CELL;type=VOICE;waid=${ownerNumber}:+${ownerNumber}\n` +
-      'END:VCARD';
+    // 2. Send the audio clip
+    const audioPath = path.join(__dirname, '../assets/alive.m4a');
 
-    await sock.sendMessage(jid, {
-      contacts: {
-        displayName: ownerName,
-        contacts: [{ vcard }]
-      }
-    }, { quoted: msg });
-
-    // 3. Send the 20-second audio clip
-    const audioPath = path.join(__dirname, '../assets/alive.mp3');
     if (fs.existsSync(audioPath)) {
       await sock.sendMessage(jid, {
         audio: fs.readFileSync(audioPath),
