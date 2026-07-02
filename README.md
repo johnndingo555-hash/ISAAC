@@ -25,6 +25,16 @@ ISAAC BOT
 <p align="centre">
 <a href="https://kingpin-sjlx.onrender.com"><img height= "37" title="Author" src="https://img.shields.io/badge/Session-green?style=for-the-badge&logo=render"></a>
 <p/>
+## PANEL DEPLOYMENT 
+
+<p align="center">
+      <b>
+     Click below to Download latest ISAAC-md zip.
+      <br><br>
+      <a href="https://github.com/kingplayboi/ISAAC/archive/refs/heads/main.zip">
+        <img src="https://img.shields.io/badge/download-zip-blue" alt="Download zip" width="200">
+      </a>
+    </p>
 
   
 DEPLOY TO HEROKU
