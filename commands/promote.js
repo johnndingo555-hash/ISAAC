@@ -30,17 +30,23 @@ module.exports = {
       return;
     }
 
-    const metadata = await sock.groupMetadata(jid);
-    const senderJid = msg.key.participant || msg.key.remoteJid;
-    const botJid = sock.user.id.split(':')[0] + '@s.whatsapp.net';
+const normalizeJid = (jid) =>
+  jid?.split('@')[0].split(':')[0];
+const metadata = await sock.groupMetadata(jid);
+const senderJid = msg.key.participant || msg.key.remoteJid;
+const botJid = sock.user.id;
 
-    const isSenderAdmin = metadata.participants.some(
-      (p) => p.id === senderJid && (p.admin === 'admin' || p.admin === 'superadmin')
-    );
-    const isBotAdmin = metadata.participants.some(
-      (p) => p.id === botJid && (p.admin === 'admin' || p.admin === 'superadmin')
-    );
+const isSenderAdmin = metadata.participants.some(
+  (p) =>
+    normalizeJid(p.id) === normalizeJid(senderJid) &&
+    !!p.admin
+);
 
+const isBotAdmin = metadata.participants.some(
+  (p) =>
+    normalizeJid(p.id) === normalizeJid(botJid) &&
+    !!p.admin
+);
     if (!isSenderAdmin) {
       await sock.sendMessage(jid, { text: '❌ Only group admins can use this command.' }, { quoted: msg });
       return;

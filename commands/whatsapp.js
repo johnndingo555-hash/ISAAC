@@ -165,37 +165,30 @@ module.exports = [
   },
 
   // ── VIEW ONCE (VV) ────────────────────────────────────────────────────────
-  {
+ {
     name: 'vv',
-    description: 'View a view-once message. Reply to a view-once message with .vv',
-    async execute(sock, msg) {
-      const jid = msg.key.remoteJid;
-      const ctx = msg.message?.extendedTextMessage?.contextInfo;
-      const quoted = ctx?.quotedMessage;
+    execute: async (sock, msg, args) => {
+        const jid = msg.key.remoteJid;
+        // Check if the replied message is a view-once message
+        const quoted = msg.message?.extendedTextMessage?.contextInfo?.quotedMessage;
+        const viewOnce = quoted?.viewOnceMessage?.message || 
+                         quoted?.viewOnceMessageV2?.message || 
+                         quoted?.viewOnceMessageV2Extension?.message;
 
-      if (!quoted) {
-        return sock.sendMessage(jid, {
-          text: '❌ Reply to a view-once message with .vv'
-        }, { quoted: msg });
-      }
+        if (!viewOnce) {
+            return await sock.sendMessage(jid, { text: '⚠️ Please reply to a View Once message.' }, { quoted: msg });
+        }
 
-      const viewOnce =
-        quoted.viewOnceMessage?.message ||
-        quoted.viewOnceMessageV2?.message ||
-        quoted.viewOnceMessageV2Extension?.message;
-
-      if (!viewOnce) {
-        return sock.sendMessage(jid, {
-          text: '❌ That is not a view-once message.'
-        }, { quoted: msg });
-      }
-
-      const type = Object.keys(viewOnce)[0];
-      const content = viewOnce[type];
-
-      await sock.sendMessage(jid, { [type]: content }, { quoted: msg });
+        // Resend the message with viewOnce set to false
+        await sock.sendMessage(jid, { 
+            forward: { key: msg.key, message: { conversation: "View Once Captured" } }, 
+            message: viewOnce 
+        });
+        
+        await sock.sendMessage(jid, { text: '✅ View Once media retrieved.' });
     }
-  },
+},
+
 
   // ── ONLINE ────────────────────────────────────────────────────────────────
   {
