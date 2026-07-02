@@ -10,8 +10,7 @@
   ],
   "formation": {
     "worker": {
-      "quantity": 1,
-      "size": "eco"
+      "quantity": 1
     }
   },
   "env": {
