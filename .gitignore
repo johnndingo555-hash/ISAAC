@@ -17,5 +17,4 @@ npm-debug.log*
 Thumbs.db
 .env
 data/
-assets/*.mp4
-assets/*.m4a
+
