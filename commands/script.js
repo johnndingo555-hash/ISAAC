@@ -22,24 +22,8 @@ https://github.com/kingplayboi/ISAAC
 ╰━━━━━━━━━━━━━━⬣
 `.trim();
 
-    const videoPath = path.join(__dirname, '../assets/script.mp4');
-
-    if (fs.existsSync(videoPath)) {
-      await sock.sendMessage(
-        jid,
-        {
-          video: fs.readFileSync(videoPath),
-          caption,
-          gifPlayback: true
-        },
-        { quoted: msg }
-      );
-    } else {
-      await sock.sendMessage(
-        jid,
-        { text: caption },
-        { quoted: msg }
-      );
-    }
-  }
-};
+await sock.sendMessage(
+  jid,
+  { text: caption },
+  { quoted: msg }
+);
