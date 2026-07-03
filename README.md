@@ -6,14 +6,6 @@ ISAAC BOT
 
 <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Black+Ops+One&size=50&pause=1000&color=1BAFBAFF&center=true&width=910&height=100&lines=HELLO+THIS+IS+ISAAC-MD;A+MULTI+DEVICE+WHATSAPP+BOT;SCRIPTED+BY+ISAK+TECH;FORK+REPO+AND+GIVE+US+A+STAR" alt="Typing SVG" /></a>
   </p>
-
-
-
-
-## ` Fork this repo`
-<p align="centre">
-<a href="https://github.com/kingplayboi/ISAAC/fork"><img src="https://img.shields.io/badge/Fork%20Create-purple?style=for-the-badge&logo=github" alt="FORK ISAAC-MD" width="160"></a>
-<p/>
   
 
 <h1 align="center">
@@ -25,6 +17,14 @@ ISAAC BOT
   <a href="https://git.io/typing-svg">
     <img src="https://readme-typing-svg.demolab.com?font=Black+Ops+One&size=50&pause=1000&color=1BAFBAFF&center=true&width=910&height=100&lines=YOOOW+THIS+IS+ISAAC-BOT;MULTI+DEVICE+WHATSAPP+BOT;MADE+TO+HELP+WHATSAPP+BEINGS;STAR+AND+FORK+THE+REPO" alt="Typing SVG" />
   </a>
+
+
+
+  
+## ` Fork this repo`
+<p align="centre">
+<a href="https://github.com/kingplayboi/ISAAC/fork"><img src="https://img.shields.io/badge/Fork%20Create-purple?style=for-the-badge&logo=github" alt="FORK ISAAC-MD" width="160"></a>
+<p/>
 
   Linking/Pairing:
 ## ` Pair onrender`
