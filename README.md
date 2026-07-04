@@ -46,8 +46,11 @@
 ](https://isaac-verify.vercel.app)
 
 
-  DEPLOY TO HEROKU
-Https://heroku.com/deploy?template=https://github.com/kingplayboi/ISAAC
+  <p align="center">
+  <a href="https://heroku.com/deploy?template=https://github.com/kingplayboi/ISAAC">
+    <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy to Heroku">
+  </a>
+</p>
 
 
 ## PANEL DEPLOYMENT 
