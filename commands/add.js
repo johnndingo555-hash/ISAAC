@@ -3,7 +3,7 @@
  * -----------------
  * Adds a participant to the group by phone number. Admin-only.
  *
- * Usage: .add 254712345678
+ * Usage: .add 254754574642
  */
 module.exports = {
   name: 'add',
@@ -18,7 +18,7 @@ module.exports = {
 
     const number = (args[0] || '').replace(/[^0-9]/g, '');
     if (!number) {
-      await sock.sendMessage(jid, { text: '❌ Provide a number. Usage: .add 254712345678' }, { quoted: msg });
+      await sock.sendMessage(jid, { text: '❌ Provide a number. Usage: .add 254754574642' }, { quoted: msg });
       return;
     }
 
