@@ -6,7 +6,7 @@
  *   .unban @user        (mention)
  *   .unban (as a reply to the target's message)
  */
-const config = require('../config/config');
+const { isOwner } = require('../utils/isOwner');
 const { unbanUser, isBanned } = require('../utils/banList');
 
 module.exports = {
@@ -14,10 +14,8 @@ module.exports = {
     description: 'Unbans a user, restoring their access to bot commands (owner only).',
     async execute(sock, msg, args) {
         const jid = msg.key.remoteJid;
-        const senderJid = msg.key.participant || msg.key.remoteJid;
-        const senderNumber = senderJid.split('@')[0].split(':')[0];
 
-        if (senderNumber !== config.ownerNumber) {
+        if (!isOwner(msg)) {
             return sock.sendMessage(jid, { text: '❌ Only the bot owner can use this command.' }, { quoted: msg });
         }
 
