@@ -1,9 +1,5 @@
 ISAAC BOT
 
-<img width="720" height="631" alt="WhatsApp Image 2026-06-25 at 15 55 48" src="https://github.com/user-attachments/assets/29486bcb-8839-42df-8d87-01e60a780f0f" />
-
-
-
 <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Black+Ops+One&size=50&pause=1000&color=1BAFBAFF&center=true&width=910&height=100&lines=HELLO+THIS+IS+ISAAC-MD;A+MULTI+DEVICE+WHATSAPP+BOT;SCRIPTED+BY+ISAK+TECH;FORK+REPO+AND+GIVE+US+A+STAR" alt="Typing SVG" /></a>
   </p>
   
