@@ -1,4 +1,12 @@
-ISAAC BOT
+<h1 align="center">🤖 ISAAC BOT 🤖</h1>
+
+<p align="center">
+  <img
+    src="https://github.com/user-attachments/assets/db59afdd-3fe9-488d-bdb4-5c2648239ee0"
+    alt="ISAAC Banner"
+    width="100%"
+  />
+</p>
 
 <p align="center">
   <img
