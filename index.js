@@ -75,6 +75,7 @@ restoreSessionFromEnv();
     const { state, saveCreds } = await useMultiFileAuthState(
       path.join(__dirname, config.authFolder)
     );
+const wasAlreadyRegistered = state.creds.registered;
 
     // Always connect using the latest known WhatsApp Web protocol version
     // to reduce the chance of connection issues caused by an outdated version.
@@ -177,7 +178,7 @@ sock.ev.on('connection.update', async ({ connection }) => {
 
     // Register all event listeners, passing startBot itself into the
     // connection handler so it can trigger a clean reconnect when needed.
-    registerConnectionHandler(sock, startBot);
+    registerConnectionHandler(sock, startBot, wasAlreadyRegistered);
     registerMessageHandler(sock, commands);
   } catch (error) {
     logger.error(`[startBot] Failed to start the bot: ${error.message}`);

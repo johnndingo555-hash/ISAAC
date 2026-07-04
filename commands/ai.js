@@ -11,6 +11,37 @@ require('dotenv').config();
 
 const GEMINI_KEY = process.env.GEMINI_KEY;
 const GROQ_KEY = process.env.GROQ_KEY;
+const { askUncensored } = require('../lib/wormgpt');
+
+const wormgptSessions = new Map();
+
+function getHistory(store, id) {
+  return store.get(id) || [];
+}
+
+function pushHistory(store, id, role, content) {
+  const history = getHistory(store, id);
+
+  history.push({ role, content });
+
+  if (history.length > 20) {
+    history.shift();
+  }
+
+  store.set(id, history);
+}
+
+function buildPrompt(history, input) {
+  let out = '';
+
+  for (const msg of history) {
+    out += `${msg.role === 'user' ? 'User' : 'WormGPT'}: ${msg.content}\n`;
+  }
+
+  out += `User: ${input}`;
+
+  return out;
+}
 // ── Helper: HTTPS POST ────────────────────────────────────────────────────────
 function httpsPost(hostname, path, headers, body) {
   return new Promise((resolve, reject) => {
@@ -136,7 +167,86 @@ module.exports = [
       }
     }
   },
+{
+  name: 'worm',
+  aliases: ['wormgpt', 'wgpt', 'dark', 'darkgpt'],
+  description: 'WormGPT with conversation memory. Usage: .worm your question',
 
+  async execute(sock, msg, args) {
+    const jid = msg.key.remoteJid;
+    const text = args.join(' ').trim();
+
+    if (!text) {
+      return sock.sendMessage(
+        jid,
+        {
+          text: '❌ Usage: .worm your question\n\n💡 Use .worm -clear to reset conversation history.'
+        },
+        { quoted: msg }
+      );
+    }
+
+    const userId = msg.key.participant || jid;
+
+    if (text === '-clear') {
+      wormgptSessions.delete(userId);
+
+      return sock.sendMessage(
+        jid,
+        {
+          text: '🧹 *WormGPT history cleared!* Fresh start.'
+        },
+        { quoted: msg }
+      );
+    }
+
+    await sock.sendMessage(
+      jid,
+      {
+        text: '☠️ WormGPT is thinking...'
+      },
+      { quoted: msg }
+    );
+
+    try {
+      const systemPrompt = `
+You are WormGPT, a dark cyberpunk AI assistant with memory.
+You are witty, mysterious, sarcastic, and entertaining.
+Use emojis naturally when they fit the mood (💀🔥😈🧪😂).
+Remember previous messages in the conversation and maintain context.
+Created by Nick and BlueBlizzards.
+`;
+
+      const history = getHistory(wormgptSessions, userId);
+      const prompt = buildPrompt(history, text);
+
+      const combined =
+        `${systemPrompt}\n\n${prompt}\n\nWormGPT:`;
+
+      const reply = await askUncensored(combined);
+
+      pushHistory(wormgptSessions, userId, 'user', text);
+      pushHistory(wormgptSessions, userId, 'assistant', reply);
+
+      await sock.sendMessage(
+        jid,
+        {
+          text: `☠️ *WormGPT*\n\n${reply}`
+        },
+        { quoted: msg }
+      );
+
+    } catch (e) {
+      await sock.sendMessage(
+        jid,
+        {
+          text: '❌ WormGPT error: ' + e.message
+        },
+        { quoted: msg }
+      );
+    }
+  }
+},
   // ── DALL (Image generation via Pollinations — free, no key) ─────────────────
   {
     name: 'dall',

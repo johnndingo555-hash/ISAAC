@@ -24,7 +24,7 @@ const logger = require('../utils/logger');
  * @param {Function} startBot - reference to the bot startup function,
  *                              used to reconnect automatically when needed
  */
-function registerConnectionHandler(sock, startBot) {
+function registerConnectionHandler(sock, startBot, wasAlreadyRegistered) {
   sock.ev.on('connection.update', (update) => {
     const { connection, lastDisconnect, qr } = update;
 
@@ -40,10 +40,18 @@ function registerConnectionHandler(sock, startBot) {
     }
 
     if (connection === 'open') {
-      logger.info('✅ Connected to WhatsApp successfully!');
-    }
+  logger.info('✅ Connected to WhatsApp successfully!');
 
-    if (connection === 'close') {
+  if (wasAlreadyRegistered) {
+    const selfJid = sock.user.id;
+
+    sock.sendMessage(selfJid, {
+      text: '🤖 *ISAAC-MD has started running*',
+    }).catch((err) => logger.error('Failed to send startup message:', err));
+  }
+}
+
+if (connection === 'close') {
       // lastDisconnect.error contains a Boom error with a statusCode that
       // tells us *why* we got disconnected, which determines whether we
       // should attempt to reconnect automatically.
