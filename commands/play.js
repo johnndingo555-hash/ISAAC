@@ -6,6 +6,8 @@ const os = require("os");
 const path = require("path");
 
 const execFileAsync = promisify(execFile);
+const ytdlp = require("youtube-dl-exec");
+const YTDLP_BIN = ytdlp.constants.YOUTUBE_DL_PATH;
 
 module.exports = {
   name: "play",
@@ -50,7 +52,7 @@ module.exports = {
 
       console.log("[PLAY] Running yt-dlp...");
 
-      const { stdout, stderr } = await execFileAsync("yt-dlp", [
+      const { stdout, stderr } = await execFileAsync(YTDLP_BIN, [
         "-x",
         "--audio-format", "mp3",
         "--audio-quality", "0",
