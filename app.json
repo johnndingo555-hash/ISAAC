@@ -6,10 +6,7 @@
   "keywords": ["whatsapp", "bot", "isaac", "baileys"],
   "success_url": "/",
   "buildpacks": [
-  { "url": "heroku/nodejs" },
-  {
-    "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git"
-  }
+  { "url": "heroku/nodejs" }
 ],
   "formation": {
     "worker": {
