@@ -37,6 +37,20 @@ const fs = require('fs');
  * local auth session exists yet, decode it back into creds.json so the
  * bot can connect without needing a fresh QR/pairing code scan.
  */
+function restoreSettingsFromEnv() {
+  const settingsPath = path.join(__dirname, 'config', 'botSettings.json');
+
+  if (config.botSettingsData && !fs.existsSync(settingsPath)) {
+    try {
+      const raw = Buffer.from(config.botSettingsData, 'base64').toString('utf8');
+      fs.writeFileSync(settingsPath, raw);
+      logger.info('✅ Restored bot settings from BOT_SETTINGS_DATA.');
+    } catch (error) {
+      logger.error(`[restoreSettingsFromEnv] Failed to restore settings: ${error.message}`);
+    }
+  }
+}
+
 function restoreSessionFromEnv() {
   const authDir = path.join(__dirname, config.authFolder);
   const credsPath = path.join(authDir, 'creds.json');
@@ -72,6 +86,7 @@ async function startBot() {
     // folder defined by config.authFolder) so you don't need to re-scan
     // the QR code every time the bot restarts.
 restoreSessionFromEnv();
+restoreSettingsFromEnv();
 
     const { state, saveCreds } = await useMultiFileAuthState(
       path.join(__dirname, config.authFolder)
