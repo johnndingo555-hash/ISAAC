@@ -25,3 +25,4 @@ commands/*.mp3
 .env
 config/botSettings.json
 config/sudoList.json
+temp_pair_sessions/
