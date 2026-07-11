@@ -387,38 +387,36 @@ console.log('STARTS WITH PREFIX =', text.startsWith(config.prefix));
               }
               continue;
             }
-// GPTDM: auto-reply to plain (non-command) DMs using Gemini.
+// GPTDM: auto-reply to plain (non-command) DMs using Gemini, via the
+// same Keith API endpoint ai.js's .gemini command already uses.
               if (!msg.key.remoteJid.endsWith('@g.us')) {
                 const settingsStore = require('../utils/settingsStore');
                 if (settingsStore.get('gptdm', false)) {
                   try {
                     const https = require('https');
-                    const GEMINI_KEY = process.env.GEMINI_KEY;
+                    const { KEITH_BASE } = require('../config/apis');
+                    const encoded = encodeURIComponent(text);
 
-                    const geminiReply = await new Promise((resolve, reject) => {
-                      const body = JSON.stringify({ contents: [{ parts: [{ text }] }] });
-                      const req = https.request(
-                        {
-                          hostname: 'generativelanguage.googleapis.com',
-                          path: `/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_KEY}`,
-                          method: 'POST',
-                          headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) },
-                        },
-                        (res) => {
-                          let raw = '';
-                          res.on('data', (c) => (raw += c));
-                          res.on('end', () => {
-                            try { resolve(JSON.parse(raw)); }
-                            catch (e) { reject(e); }
-                          });
-                        }
-                      );
-                      req.on('error', reject);
-                      req.write(body);
-                      req.end();
+                    const reply = await new Promise((resolve, reject) => {
+                      https.get(`${KEITH_BASE}/ai/gemini?q=${encoded}`, (res) => {
+                        let raw = '';
+                        res.on('data', (c) => (raw += c));
+                        res.on('end', () => {
+                          try {
+                            const json = JSON.parse(raw);
+                            if (!json.status) return reject(new Error(json.error || 'API request failed'));
+                            resolve(
+                              json.result
+                                .replace(/Keith AI/gi, 'ISAAC AI')
+                                .replace(/Keithkeizzah/gi, 'ISAAC')
+                            );
+                          } catch (e) {
+                            reject(e);
+                          }
+                        });
+                      }).on('error', reject);
                     });
 
-                    const reply = geminiReply?.candidates?.[0]?.content?.parts?.[0]?.text;
                     if (reply) {
                       await sock.sendMessage(msg.key.remoteJid, { text: reply }, { quoted: msg });
                     }
