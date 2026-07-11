@@ -55,9 +55,7 @@ module.exports = {
 
         videoTitle = info.title || "Audio";
       } else {
-        // Search by song name (Spotify link input also falls through to
-        // here, since ravenn.site has no working Spotify-specific search —
-        // this searches YouTube for the same track by name instead)
+        // Search by song name
         const search = await axios.get(
           `${API}/search/yts?query=${encodeURIComponent(query)}`
         );

@@ -188,7 +188,7 @@ module.exports = [
     try {
       const encoded = encodeURIComponent(prompt);
 
-      https.get(`https://ravenn.site/ai/gpt?q=${encoded}`, (res) => {
+      https.get(`${KEITH_BASE}/ai/gpt?q=${encoded}`, (res) => {
         let data = '';
 
         res.on('data', (chunk) => {
