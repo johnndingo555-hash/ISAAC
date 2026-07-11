@@ -71,7 +71,7 @@ menuMessage += `└────────────────────�
 
         // Your 13 commands
 const categories = {
-    'GROUP': ['demote', 'groupinfo', 'kick', 'mute', 'promote', 'tagall', 'warn', 'add', 'invite', 'join', 'welcome', 'goodbye', 'unmute', 'amute', 'aunmute', 'ban', 'unban', 'close', 'open', 'desc', 'subject', 'link', 'revoke', 'icon', 'hidetag', 'antilink', 'setgreet', 'tag'],
+    'GROUP': ['demote', 'groupinfo', 'kick', 'mute', 'promote', 'tagall', 'warn', 'add', 'invite', 'join', 'welcome', 'goodbye', 'unmute', 'amute', 'aunmute', 'ban', 'unban', 'close', 'open', 'desc', 'subject', 'link', 'revoke', 'icon', 'hidetag', 'antilink', 'setgreet', 'tag', 'disp-1', 'disp-7', 'disp-90', 'disp-off', 'approve', 'reject', 'admin', 'vcf', 'groupstatus', 'foreigners'],
     'SETTINGS': ['anticall', 'autoread', 'autorecording', 'autotyping', 'mode', 'prefix', 'autoview', 'pdm', 'zushi'],
     'DOWNLOAD': ['download', 'audio', 'spotify', 'play', 'tiktok', 'ig', 'fb', 'twitter', 'song', 'shazam', 'lyrics', 'lyrics2'],
     'GAMES': ['game', 'tictactoe', 'move', 'ttend', 'rps', 'wordguess', 'guess', 'wgend', 'mathquiz', 'mans', 'answer'],
@@ -81,7 +81,7 @@ const categories = {
     'USER': ['block', 'unblock', 'pp', 'fullpp', 'jid', 'gjid', 'left', 'ison'],
     'OWNER': ['owner', 'pair', 'settings', 'kill', 'backup', 'reminder', 'task', 'update', 'updatenow', 'eval', 'gauth', 'antilinkall', 'antidelete', 'autolike', 'autobio', 'menutype', 'wapresence', 'badword', 'antibot', 'antitag', 'welcomegoodbye', 'broadcast', 'restart', 'blocklist', 'logout', 'fetch', 'shell', 'getcmd', 'getfile', 'cat', 'addsudo', 'delsudo', 'checksudo', 'clearsudos'],
     'TOOLS': ['webscan', 'apk', 'qr', 'url', 'imagesearch', 'define'],
-    'LIVESCORE': ['livescore', 'table', 'bundesliga', 'epl', 'laliga', 'ligue1', 'seriea', 'ucl', 'news', 'playersearch', 'teamsearch'],
+    'FOOTBALL': ['livescore', 'table', 'bundesliga', 'epl', 'laliga', 'ligue1', 'seriea', 'ucl', 'news', 'playersearch', 'teamsearch', 'fifa', 'fifaplayoffs', 'euro', 'eplscorers', 'laligascorers', 'bundesligascorers', 'serieascorers', 'ligue1scorers', 'uclscorers'],
     'CODING': ['enc', 'gpass', 'compile-py', 'compile-js', 'compile-c', 'compile-c++'],
     'CONVERTER': ['topdf', 'toexcel', 'toword', 'tovideo', 'toaudio', 'toimg', 'ocr', 'totext', 'carbon', 'cut', 'merge'],
     'MEDIA': ['s', 'take', 'mix', 'smeme', 'vv', 'vv2', 'botpp', 'getpfp', 'removebg', 'similarimage', 'remini', 'remini2', 'save'],
