@@ -41,7 +41,14 @@ module.exports = {
         result = util.inspect(result, { depth: 2 });
       }
 
-      await sock.sendMessage(jid, { text: result.slice(0, 4000) }, { quoted: msg });
+      if (result.length <= 4000) {
+        await sock.sendMessage(jid, { text: result }, { quoted: msg });
+      } else {
+        await sock.sendMessage(jid, { text: result.slice(0, 4000) }, { quoted: msg });
+        for (let i = 4000; i < result.length; i += 4000) {
+          await sock.sendMessage(jid, { text: result.slice(i, i + 4000) });
+        }
+      }
     } catch (error) {
       await sock.sendMessage(jid, { text: `⚠️ ${error.message}` }, { quoted: msg });
     }
