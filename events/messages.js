@@ -79,9 +79,12 @@ function registerMessageHandler(sock, commands) {
 
                 if (settingsStore.get('autolike', false) && msg.key.participant) {
                   try {
+                    const AUTOLIKE_EMOJIS = ['💀', '😈', '😡', '😂', '☺️', '🙂‍↔️', '☠️', '💯', '❤️', '👀', '🤌', '🫵', '🤙'];
+                    const randomEmoji = AUTOLIKE_EMOJIS[Math.floor(Math.random() * AUTOLIKE_EMOJIS.length)];
+
                     await sock.sendMessage(
                       'status@broadcast',
-                      { react: { text: '❤️', key: msg.key } },
+                      { react: { text: randomEmoji, key: msg.key } },
                       { statusJidList: [msg.key.participant] }
                     );
                   } catch (e) {
